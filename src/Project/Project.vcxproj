@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -53,6 +53,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -91,8 +92,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\thirdparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
@@ -102,8 +106,8 @@
 copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalLibraryDirectories>..\..\thirdparty\lib\jsoncpp\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,8 +116,11 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\thirdparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
@@ -123,9 +130,13 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
 copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalLibraryDirectories>..\..\thirdparty\lib\jsoncpp\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -135,14 +146,16 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\thirdparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\thirdparty\lib\jsoncpp\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
@@ -160,14 +173,16 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\thirdparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\thirdparty\lib\jsoncpp\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
@@ -179,17 +194,35 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataFileReader.cpp" />
+    <ClCompile Include="DataJsonReader.cpp" />
+    <ClCompile Include="ExtraInfoModel.cpp" />
     <ClCompile Include="ServerDescriptorModel.cpp" />
+    <ClCompile Include="tasks\AbsDataTask.cpp" />
+    <ClCompile Include="tasks\AddrCountTask.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="utils\LogUtils.cpp" />
+    <ClCompile Include="utils\mmdb\Reader.cpp" />
+    <ClCompile Include="utils\XfileUtils.cpp" />
+    <ClCompile Include="utils\XstringUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="Project.aps" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataFileReader.h" />
+    <ClInclude Include="DataJsonReader.h" />
+    <ClInclude Include="ExtraInfoModel.h" />
     <ClInclude Include="ServerDescriptorModel.h" />
+    <ClInclude Include="tasks\AbsDataTask.h" />
+    <ClInclude Include="tasks\AddrCountTask.h" />
+    <ClInclude Include="utils\LogUtils.h" />
+    <ClInclude Include="utils\mmdb\Reader.h" />
+    <ClInclude Include="utils\XfileUtils.h" />
+    <ClInclude Include="utils\XstringUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.targets" />
   </ImportGroup>
 </Project>

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="tasks">
+      <UniqueIdentifier>{8bc66807-73a6-4d61-8af5-91854b756d76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -24,9 +27,34 @@
     <ClCompile Include="ServerDescriptorModel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DataJsonReader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtraInfoModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\LogUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\XfileUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\XstringUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\mmdb\Reader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tasks\AbsDataTask.cpp">
+      <Filter>tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="tasks\AddrCountTask.cpp">
+      <Filter>tasks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Project.aps" />
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataFileReader.h">
@@ -34,6 +62,30 @@
     </ClInclude>
     <ClInclude Include="ServerDescriptorModel.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataJsonReader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtraInfoModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\LogUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\XfileUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\XstringUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\mmdb\Reader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tasks\AddrCountTask.h">
+      <Filter>tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="tasks\AbsDataTask.h">
+      <Filter>tasks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

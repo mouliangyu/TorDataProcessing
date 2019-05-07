@@ -2,3 +2,8 @@ build/*
 bin/*
 src/Project/*.vcxproj.user
 src/.vs/*
+.vs/*
+log/*
+src/NativeTest
+src/x64
+src/x86
