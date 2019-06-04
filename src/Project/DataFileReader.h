@@ -54,7 +54,7 @@ public:
 	
 	void traverse(ITraverseCallback* callback);
 
-	int getListFileSize();
+	size_t getListFileSize();
 
 	virtual DataFileIterator &begin()override;
 	virtual DataFileIterator &getIterator()override;

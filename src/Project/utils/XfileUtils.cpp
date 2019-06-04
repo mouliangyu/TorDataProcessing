@@ -3,7 +3,7 @@
 const int XfileUtils::SIZE_4K = 1024 * 4;
 
 int XfileUtils::mkdirs(std::string & path) {
-	int pathLen = path.length();
+	size_t pathLen = path.length();
 	char *cPath = (char *)malloc(sizeof(char)*(pathLen + 1));
 	strncpy(cPath, path.c_str(), pathLen);
 	cPath[pathLen] = '\0';
@@ -88,7 +88,7 @@ int XfileUtils::copyFile(std::ifstream & in, std::ofstream & out) {
 		return -1;
 	} else {
 		char buffer[SIZE_4K];
-		int totalBytes = 0;
+		std::streamsize totalBytes = 0;
 		while (in) {
 			in.read(buffer, SIZE_4K);
 			out.write(buffer, in.gcount());

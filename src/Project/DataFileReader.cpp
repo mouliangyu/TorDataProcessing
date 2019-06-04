@@ -74,14 +74,14 @@ void DataFileReader::traverse(ITraverseCallback* callback)
 		file.open(*iterator, std::ios::in | std::ios::binary);
 		if (file.is_open()) {
 			callback->Callback(*iterator, file);
-			std::cout << TAG << "read file : " << *iterator<<std::endl;
+			
 		}
 		file.close();
 		file.clear();
 	}
 }
 
-int DataFileReader::getListFileSize() {
+size_t DataFileReader::getListFileSize() {
 	return mFiles.size();
 }
 

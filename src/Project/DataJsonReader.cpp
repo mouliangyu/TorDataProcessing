@@ -8,11 +8,11 @@ DataJsonParser::~DataJsonParser() {
 	delete mDataFileReader;
 }
 
-void DataJsonParser::registerJsonCallback(boost::shared_ptr<IJsonParserCallback>& callback) {
+void DataJsonParser::registerCallback(boost::shared_ptr<IJsonParserCallback>& callback) {
 	mJsonCallbacklist.push_back(callback);
 }
 
-void DataJsonParser::unregisterJsonCallback(boost::shared_ptr<IJsonParserCallback>& callback) {
+void DataJsonParser::unregisterCallback(boost::shared_ptr<IJsonParserCallback>& callback) {
 	size_t count = mJsonCallbacklist.size();
 	for (size_t i = 0; i < count; i++) {
 		if (!mJsonCallbacklist[i].expired()) {
@@ -26,8 +26,21 @@ void DataJsonParser::unregisterJsonCallback(boost::shared_ptr<IJsonParserCallbac
 	}
 }
 
-void DataJsonParser::traverseJson() {
+void DataJsonParser::run() {
+	size_t count = mJsonCallbacklist.size();
+	for (int i = 0; i < count; i++) {
+		if (!mJsonCallbacklist[i].expired()) {
+			mJsonCallbacklist[i].lock()->onStart();
+		}
+	}
+
 	mDataFileReader->traverse(this);
+
+	for (int i = 0; i < count; i++) {
+		if (!mJsonCallbacklist[i].expired()) {
+			mJsonCallbacklist[i].lock()->onEnd();
+		}
+	}
 }
 
 int DataJsonParser::getFileListSize() {

@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -92,9 +92,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include\bsoncxx\v_noabi;..\..\thirdparty\include\mongocxx\v_noabi;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
@@ -106,8 +106,8 @@
 copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\curl;..\..\thirdparty\lib\maxminddb;..\..\thirdparty\lib\mongocxx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib;libcurl_a.lib;Crypt32.lib;Wldap32.lib;winmm.lib;Normaliz.lib;Advapi32.lib;mongocxx.lib;bsoncxx.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,22 +116,24 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include\bsoncxx\v_noabi;..\..\thirdparty\include\mongocxx\v_noabi;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <PreprocessToFile>false</PreprocessToFile>
+      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>md $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)
+copy $(SolutionDir)..\thirdparty\bin $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)
 copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\curl;..\..\thirdparty\lib\maxminddb;..\..\thirdparty\lib\mongocxx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib;libcurl_a.lib;Crypt32.lib;Wldap32.lib;winmm.lib;Normaliz.lib;Advapi32.lib;mongocxx.lib;bsoncxx.lib</AdditionalDependencies>
       <ShowProgress>LinkVerbose</ShowProgress>
     </Link>
     <ProjectReference>
@@ -146,16 +148,16 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include\bsoncxx\v_noabi;..\..\thirdparty\include\mongocxx\v_noabi;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\curl;..\..\thirdparty\lib\maxminddb;..\..\thirdparty\lib\mongocxx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib;libcurl_a.lib;Crypt32.lib;Wldap32.lib;winmm.lib;Normaliz.lib;Advapi32.lib;mongocxx.lib;bsoncxx.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
@@ -173,53 +175,176 @@ copy $(TargetPath) $(SolutionDir)..\bin\$(ConfigurationName)</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include;$(MSMPI_INC)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\thirdparty\boost_1_67_0;..\..\thirdparty\include\bsoncxx\v_noabi;..\..\thirdparty\include\mongocxx\v_noabi;..\..\thirdparty\include;$(MSMPI_INC);$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\maxminddb</AdditionalLibraryDirectories>
-      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Projects\thirdparty\boost_1_67_0\lib64-msvc-14.1;..\..\thirdparty\lib\jsoncpp\$(PlatformTarget);$(MSMPI_LIB64);..\..\thirdparty\lib\curl;..\..\thirdparty\lib\maxminddb;..\..\thirdparty\lib\mongocxx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>json_vc71_libmt.lib;msmpi.lib;libmaxminddb.lib;ws2_32.lib;libcurl_a.lib;Crypt32.lib;Wldap32.lib;winmm.lib;Normaliz.lib;Advapi32.lib;mongocxx.lib;bsoncxx.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)..\build\log\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>md $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)
+copy $(SolutionDir)..\thirdparty\bin $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)
 copy $(TargetPath) $(SolutionDir)..\bin\$(PlatformTarget)\$(ConfigurationName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataFileReader.cpp" />
     <ClCompile Include="DataJsonReader.cpp" />
+    <ClCompile Include="download\TorDataSpider.cpp" />
+    <ClCompile Include="download\utils\TorIndexUtils.cpp" />
     <ClCompile Include="ExtraInfoModel.cpp" />
+    <ClCompile Include="GlobalScheduler.cpp" />
+    <ClCompile Include="models\descriptor\impl\DescriptorImpl.cpp" />
+    <ClCompile Include="models\descriptor\impl\DirectorySignatureImpl.cpp" />
+    <ClCompile Include="models\descriptor\impl\DirSourceEntryImpl.cpp" />
+    <ClCompile Include="models\descriptor\impl\Key.cpp" />
+    <ClCompile Include="models\descriptor\impl\NetworkStatusImpl.cpp" />
+    <ClCompile Include="models\descriptor\impl\RelayNetworkStatusConsensusImpl.cpp" />
+    <ClCompile Include="persistence\MongoDBConn.cpp" />
     <ClCompile Include="ServerDescriptorModel.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="tasks\AbsDataTask.cpp" />
     <ClCompile Include="tasks\AddrCountTask.cpp" />
+    <ClCompile Include="tasks\ServerReduceTask.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="threadmanager\ThreadMngr.cpp" />
+    <ClCompile Include="utils\curlwrapper\Curl.cpp" />
     <ClCompile Include="utils\LogUtils.cpp" />
+    <ClCompile Include="utils\lzma\src\7zAlloc.c" />
+    <ClCompile Include="utils\lzma\src\7zArcIn.c" />
+    <ClCompile Include="utils\lzma\src\7zBuf.c" />
+    <ClCompile Include="utils\lzma\src\7zBuf2.c" />
+    <ClCompile Include="utils\lzma\src\7zCrc.c" />
+    <ClCompile Include="utils\lzma\src\7zCrcOpt.c" />
+    <ClCompile Include="utils\lzma\src\7zDec.c" />
+    <ClCompile Include="utils\lzma\src\7zFile.c" />
+    <ClCompile Include="utils\lzma\src\7zStream.c" />
+    <ClCompile Include="utils\lzma\src\Aes.c" />
+    <ClCompile Include="utils\lzma\src\AesOpt.c" />
+    <ClCompile Include="utils\lzma\src\Alloc.c" />
+    <ClCompile Include="utils\lzma\src\Bcj2.c" />
+    <ClCompile Include="utils\lzma\src\Bcj2Enc.c" />
+    <ClCompile Include="utils\lzma\src\Bra.c" />
+    <ClCompile Include="utils\lzma\src\Bra86.c" />
+    <ClCompile Include="utils\lzma\src\BraIA64.c" />
+    <ClCompile Include="utils\lzma\src\CpuArch.c" />
+    <ClCompile Include="utils\lzma\src\Delta.c" />
+    <ClCompile Include="utils\lzma\src\DllSecur.c" />
+    <ClCompile Include="utils\lzma\src\LzFind.c" />
+    <ClCompile Include="utils\lzma\src\LzFindMt.c" />
+    <ClCompile Include="utils\lzma\src\Lzma2Dec.c" />
+    <ClCompile Include="utils\lzma\src\Lzma2DecMt.c" />
+    <ClCompile Include="utils\lzma\src\Lzma2Enc.c" />
+    <ClCompile Include="utils\lzma\src\Lzma86Dec.c" />
+    <ClCompile Include="utils\lzma\src\Lzma86Enc.c" />
+    <ClCompile Include="utils\lzma\src\LzmaDec.c" />
+    <ClCompile Include="utils\lzma\src\LzmaEnc.c" />
+    <ClCompile Include="utils\lzma\src\LzmaLib.c" />
+    <ClCompile Include="utils\lzma\src\MtCoder.c" />
+    <ClCompile Include="utils\lzma\src\MtDec.c" />
+    <ClCompile Include="utils\lzma\src\Ppmd7.c" />
+    <ClCompile Include="utils\lzma\src\Ppmd7Dec.c" />
+    <ClCompile Include="utils\lzma\src\Ppmd7Enc.c" />
+    <ClCompile Include="utils\lzma\src\Sha256.c" />
+    <ClCompile Include="utils\lzma\src\Sort.c" />
+    <ClCompile Include="utils\lzma\src\Threads.c" />
+    <ClCompile Include="utils\lzma\src\Xz.c" />
+    <ClCompile Include="utils\lzma\src\XzCrc64.c" />
+    <ClCompile Include="utils\lzma\src\XzCrc64Opt.c" />
+    <ClCompile Include="utils\lzma\src\XzDec.c" />
+    <ClCompile Include="utils\lzma\src\XzEnc.c" />
+    <ClCompile Include="utils\lzma\src\XzIn.c" />
     <ClCompile Include="utils\mmdb\Reader.cpp" />
     <ClCompile Include="utils\XfileUtils.cpp" />
     <ClCompile Include="utils\XstringUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\thirdparty\bin\bsoncxx.dll" />
+    <None Include="..\..\thirdparty\bin\concrt140.dll" />
+    <None Include="..\..\thirdparty\bin\mongocxx.dll" />
+    <None Include="..\..\thirdparty\bin\msvcp140.dll" />
+    <None Include="..\..\thirdparty\bin\vcruntime140.dll" />
     <None Include="cpp.hint" />
     <None Include="Project.aps" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataFileReader.h" />
     <ClInclude Include="DataJsonReader.h" />
+    <ClInclude Include="download\TorDataSpider.h" />
+    <ClInclude Include="download\utils\TorIndexUtils.h" />
     <ClInclude Include="ExtraInfoModel.h" />
+    <ClInclude Include="GlobalScheduler.h" />
+    <ClInclude Include="models\descriptor\Descriptor.h" />
+    <ClInclude Include="models\descriptor\DirectorySignature.h" />
+    <ClInclude Include="models\descriptor\DirSourceEntry.h" />
+    <ClInclude Include="models\descriptor\impl\DescriptorImpl.h" />
+    <ClInclude Include="models\descriptor\impl\DirectorySignatureImpl.h" />
+    <ClInclude Include="models\descriptor\impl\DirSourceEntryImpl.h" />
+    <ClInclude Include="models\descriptor\impl\Key.h" />
+    <ClInclude Include="models\descriptor\impl\NetworkStatusImpl.h" />
+    <ClInclude Include="models\descriptor\impl\RelayNetworkStatusConsensusImpl.h" />
+    <ClInclude Include="models\descriptor\NetworkStatusEntry.h" />
+    <ClInclude Include="models\descriptor\RelayNetworkStatusConsensus.h" />
+    <ClInclude Include="persistence\MongoDBConn.h" />
     <ClInclude Include="ServerDescriptorModel.h" />
+    <ClInclude Include="TaskManager.h" />
     <ClInclude Include="tasks\AbsDataTask.h" />
     <ClInclude Include="tasks\AddrCountTask.h" />
+    <ClInclude Include="tasks\ServerReduceTask.h" />
+    <ClInclude Include="threadmanager\ThreadMngr.h" />
+    <ClInclude Include="utils\curlwrapper\Curl.h" />
     <ClInclude Include="utils\LogUtils.h" />
+    <ClInclude Include="utils\lzma\src\7z.h" />
+    <ClInclude Include="utils\lzma\src\7zAlloc.h" />
+    <ClInclude Include="utils\lzma\src\7zBuf.h" />
+    <ClInclude Include="utils\lzma\src\7zCrc.h" />
+    <ClInclude Include="utils\lzma\src\7zFile.h" />
+    <ClInclude Include="utils\lzma\src\7zTypes.h" />
+    <ClInclude Include="utils\lzma\src\7zVersion.h" />
+    <ClInclude Include="utils\lzma\src\Aes.h" />
+    <ClInclude Include="utils\lzma\src\Alloc.h" />
+    <ClInclude Include="utils\lzma\src\Bcj2.h" />
+    <ClInclude Include="utils\lzma\src\Bra.h" />
+    <ClInclude Include="utils\lzma\src\Compiler.h" />
+    <ClInclude Include="utils\lzma\src\CpuArch.h" />
+    <ClInclude Include="utils\lzma\src\Delta.h" />
+    <ClInclude Include="utils\lzma\src\DllSecur.h" />
+    <ClInclude Include="utils\lzma\src\LzFind.h" />
+    <ClInclude Include="utils\lzma\src\LzFindMt.h" />
+    <ClInclude Include="utils\lzma\src\LzHash.h" />
+    <ClInclude Include="utils\lzma\src\Lzma2Dec.h" />
+    <ClInclude Include="utils\lzma\src\Lzma2DecMt.h" />
+    <ClInclude Include="utils\lzma\src\Lzma2Enc.h" />
+    <ClInclude Include="utils\lzma\src\Lzma86.h" />
+    <ClInclude Include="utils\lzma\src\LzmaDec.h" />
+    <ClInclude Include="utils\lzma\src\LzmaEnc.h" />
+    <ClInclude Include="utils\lzma\src\LzmaLib.h" />
+    <ClInclude Include="utils\lzma\src\MtCoder.h" />
+    <ClInclude Include="utils\lzma\src\MtDec.h" />
+    <ClInclude Include="utils\lzma\src\Ppmd.h" />
+    <ClInclude Include="utils\lzma\src\Ppmd7.h" />
+    <ClInclude Include="utils\lzma\src\Precomp.h" />
+    <ClInclude Include="utils\lzma\src\RotateDefs.h" />
+    <ClInclude Include="utils\lzma\src\Sha256.h" />
+    <ClInclude Include="utils\lzma\src\Sort.h" />
+    <ClInclude Include="utils\lzma\src\Threads.h" />
+    <ClInclude Include="utils\lzma\src\Xz.h" />
+    <ClInclude Include="utils\lzma\src\XzCrc64.h" />
+    <ClInclude Include="utils\lzma\src\XzEnc.h" />
     <ClInclude Include="utils\mmdb\Reader.h" />
     <ClInclude Include="utils\XfileUtils.h" />
     <ClInclude Include="utils\XstringUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="utils\lzma\src\7zVersion.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

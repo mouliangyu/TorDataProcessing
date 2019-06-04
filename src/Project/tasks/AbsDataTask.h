@@ -9,5 +9,4 @@ class AbsDataTask :public IJsonParserCallback {
 public:
 	AbsDataTask();
 	~AbsDataTask();
-	virtual void init() = 0;
 };

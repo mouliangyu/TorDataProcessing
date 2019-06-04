@@ -18,6 +18,18 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (
 		strm << static_cast<int>(lvl);
 	return strm;
 }
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream<CharT, TraitsT>& operator<<(
+	std::basic_ostream< CharT, TraitsT >& strm, boost::log::aux::process::id & processID) {
+	strm << processID.native_id;
+	return strm;
+}
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream<CharT, TraitsT>& operator<<(
+	std::basic_ostream< CharT, TraitsT >& strm, boost::log::aux::thread::id & threadID) {
+	strm << threadID.native_id;
+	return strm;
+}
 
 Logger *Logger::sInstance = nullptr;
 
@@ -25,7 +37,8 @@ Logger::Logger():
 	mLogLevel(info),
 	mLogFileFullName("D:\\WorkSpace\\GraduationDesign\\TorDataProcessing\\Project\\log\\default.log"),
 	//mLogFileFullName("default.log"),
-	mTAG("")
+	mTAG(""),
+	mInitialized(false)
 {
 	init();
 }
@@ -44,10 +57,16 @@ Logger::~Logger() {
 }
 
 int Logger::init() {
+	if (mInitialized)
+		return 0;
+	else
+		mInitialized = true;
 	try {
 		boost::shared_ptr<logging::core> logCore = logging::core::get();
 		
-		auto vFormat=expr::format("[%1%] [%2%] <%3%> [%4%]: %5%")
+		auto vFormat=expr::format("%1%:%2% [%3%] [%4%] <%5%> [%6%]: %7%")
+			% expr::attr<boost::log::aux::process::id>("ProcessID")
+			% expr::attr<boost::log::aux::thread::id>("ThreadID")
 			% expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d, %H:%M:%S")
 			% expr::format_date_time< attrs::timer::value_type >("Uptime", "%O:%M:%S")
 			//% expr::format_named_scope("Scope", keywords::format = "%n (%f:%l)")
@@ -64,10 +83,14 @@ int Logger::init() {
 		logCore->add_sink(mFileSink);
 
 		logging::add_common_attributes();
-		logging::core::get()->add_thread_attribute("Scope", attrs::named_scope());
+		//logging::core::get()->add_thread_attribute("Scope", attrs::named_scope());
+		logging::core::get()->add_global_attribute("ProcessID", attrs::current_process_id());
+		logging::core::get()->add_global_attribute("ThreadID", attrs::current_thread_id());
 
-		mInnerLogger.add_attribute("Uptime", attrs::timer());
-		mInnerLogger.add_attribute("TAG", mTAG);
+		mInnerLogger = boost::make_shared<logger_mt>();
+
+		mInnerLogger->add_attribute("Uptime", attrs::timer());
+		mInnerLogger->add_attribute("TAG", mTAG);
 		//setLogLevel(mLogLevel);
 	} catch (std::exception & e) {
 		std::cout << "Base Fatal: " << e.what() << std::endl
@@ -92,7 +115,7 @@ int Logger::setLogLevel(severity_level level) {
 int Logger::log(severity_level level, const std::string & tag, const std::string & msg) {
 	try {
 		mTAG.set(tag);
-		BOOST_LOG_SEV(mInnerLogger, level) << msg;
+		BOOST_LOG_SEV(*mInnerLogger, level) << msg;
 		mTAG.set("");
 	} catch (std::exception & e) {
 		std::cout << "Base Fatal: " << e.what() << std::endl
@@ -121,7 +144,7 @@ int Logger::log(severity_level level, const std::string & tag, const char * fmt,
 		vReceiveNum = vsnprintf(vLogBuf, vLogSize, fmt, arg_ptr);
 	}
 
-	BOOST_LOG_SEV(mInnerLogger, level) << vLogBuf;
+	BOOST_LOG_SEV(*mInnerLogger, level) << vLogBuf;
 
 	free(vLogBuf);
 
@@ -130,4 +153,8 @@ int Logger::log(severity_level level, const std::string & tag, const char * fmt,
 	mTAG.set("");
 
 	return 0;
+}
+
+boost::shared_ptr<Logger::logger_mt> Logger::getInnerLogger() {
+	return mInnerLogger;
 }

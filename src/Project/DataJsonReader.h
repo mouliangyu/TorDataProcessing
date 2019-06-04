@@ -17,10 +17,10 @@ public:
 	DataJsonParser(const std::string &path);
 	~DataJsonParser();
 
-	void registerJsonCallback(boost::shared_ptr<IJsonParserCallback> &callback);
-	void unregisterJsonCallback(boost::shared_ptr<IJsonParserCallback> &callback);
+	void registerCallback(boost::shared_ptr<IJsonParserCallback> &callback);
+	void unregisterCallback(boost::shared_ptr<IJsonParserCallback> &callback);
 
-	void traverseJson();
+	void run();
 
 	int getFileListSize();
 
@@ -60,6 +60,8 @@ private:
 
 class IJsonParserCallback {
 public:
+	virtual void onStart() = 0;
+	virtual void onEnd() = 0;
 	virtual void onParse(const std::string &path,std::ifstream &file,Json::Value &doc) = 0;
 };
 

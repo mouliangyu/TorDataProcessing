@@ -34,8 +34,8 @@ void XstringUtils::split(const std::string & str, char charactor, std::vector<st
 void XstringUtils::split(const std::string & str, const std::string & spliter, std::vector<std::string>& container) {
 	std::string right = str;
 	std::string left;
-	int spliterLen = spliter.size();
-	int index = 0;
+	size_t spliterLen = spliter.size();
+	size_t index = 0;
 	while ((index=right.find(spliter))!=std::string::npos) {
 		if (index > 0) {
 			left = right.substr(0, index);

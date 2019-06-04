@@ -148,7 +148,7 @@ int mmdb::JsonReader::parseJson(MMDB_entry_data_list_s ** proto, Json::Value & v
 		break;
 	case MMDB_DATA_TYPE_BYTES:			//4
 	{
-		if (option&OPT_IGNORE_BYTES == OPT_IGNORE_BYTES) {
+		if ((option&OPT_IGNORE_BYTES) == OPT_IGNORE_BYTES) {
 			value = "__ignored_bytes__";
 		}
 		break;
@@ -247,7 +247,7 @@ int mmdb::JsonReader::parseJson(MMDB_entry_data_s * proto, Json::Value & value) 
 		break;
 	case MMDB_DATA_TYPE_BYTES:			//4
 	{
-		if (option&OPT_IGNORE_BYTES == OPT_IGNORE_BYTES) {
+		if ((option&OPT_IGNORE_BYTES) == OPT_IGNORE_BYTES) {
 			value = "__ignored_bytes__";
 		} else {
 			value = "__not_implement_bytes__";
